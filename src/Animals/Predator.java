@@ -22,6 +22,7 @@ public abstract class Predator extends Animal {
                 if (Math.random() * 100 < probability) {
                     location.removeAnimal(prey);
                     currentFood = Math.min(maxFood, currentFood + prey.weight);
+                    logAction("ate " + prey.getClass().getSimpleName());
                     return;
                 }
             }
@@ -31,8 +32,14 @@ public abstract class Predator extends Animal {
     @Override
     public void move(Island island) {
         if (!alive) return;
-        x += random.nextInt(speed * 2 + 1) - speed;
-        y += random.nextInt(speed * 2 + 1) - speed;
+
+        int newX = Math.max(0, Math.min(island.getWidth() - 1, x + random.nextInt(speed * 2 + 1) - speed));
+        int newY = Math.max(0, Math.min(island.getHeight() - 1, y + random.nextInt(speed * 2 + 1) - speed));
+
+        logAction("moved from (" + x + ", " + y + ") to (" + newX + ", " + newY + ")");
+
+        x = newX;
+        y = newY;
     }
 
     @Override
@@ -40,7 +47,9 @@ public abstract class Predator extends Animal {
         if (!alive) return;
         long count = location.getAnimals().stream().filter(a -> a.getClass().equals(this.getClass())).count();
         if (count >= 2) {
-            location.addAnimal(this.clone());
+            Animal offspring = this.clone();
+            location.addAnimal(offspring);
+            logAction("reproduced, new " + offspring.getClass().getSimpleName() + " appeared at (" + offspring.x + ", " + offspring.y + ")");
         }
     }
 
@@ -49,6 +58,7 @@ public abstract class Predator extends Animal {
         if (currentFood <= 0) {
             alive = false;
             location.removeAnimal(this);
+            logAction("died from starvation");
         } else {
             currentFood -= weight * 0.05;
         }

@@ -10,7 +10,7 @@ public abstract class Animal {
     protected int maxCountPerCell;
     protected int speed;
     protected double maxFood;
-    protected double currentFood = 0;
+    protected double currentFood = maxFood / 2;
     protected boolean alive = true;
     protected Random random = new Random();
 
@@ -21,6 +21,10 @@ public abstract class Animal {
         this.maxCountPerCell = maxCountPerCell;
         this.speed = speed;
         this.maxFood = maxFood;
+    }
+
+    protected void logAction(String action) {
+        System.out.println(this.getClass().getSimpleName() + " (" + x + ", " + y + ") " + action);
     }
 
     public abstract void move(Island island);
