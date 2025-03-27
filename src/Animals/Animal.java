@@ -1,13 +1,12 @@
 package Animals;
 
 import IslandProcess.*;
-import Plants.Plant;
 
 import java.util.Random;
 
 public abstract class Animal {
     protected int x, y;
-    protected double weight;
+    public double weight;
     protected int maxCountPerCell;
     protected int speed;
     protected double maxFood;
@@ -24,49 +23,9 @@ public abstract class Animal {
         this.maxFood = maxFood;
     }
 
-    public void move(Island island){
-        if (!alive){
-            return;
-        }
-
-        int newX = Math.max(0, Math.min(island.getLocation(x, y).getAnimals().size() - 1, x + random.nextInt(speed * 2 + 1) - speed));
-        int newY = Math.max(0, Math.min(island.getLocation(x, y).getAnimals().size() - 1, y + random.nextInt(speed * 2 + 1) - speed));
-        this.x = newX;
-        this.y = newY;
-    }
-    public void eat(Location location)
-    {
-        if (!alive) return;
-        for (Plant plant : location.getPlants()) {
-            if (currentFood < maxFood) {
-                location.removePlant(plant);
-                currentFood += maxFood;
-                break;
-            }
-        }
-    }
-
+    public abstract void move(Island island);
+    public abstract void eat(Location location);
+    public abstract void reproduce(Location location);
     public abstract Animal clone();
-
-    public void reproduce(Location location)
-    {
-        if (!alive) return;
-        long count = location.getAnimals().stream().filter(a -> a.getClass().equals(this.getClass())).count();
-        if (count >= 2) {
-            location.addAnimal(this.clone());
-        }
-    }
-
-    public void checkHealth (Location location)
-    {
-        if (currentFood <= 0){
-            alive = false;
-            location.removeAnimal(this);
-
-        }
-        else {
-            currentFood -= weight * 0.05;
-        }
-    }
-
+    public abstract void checkHealth(Location location);
 }

@@ -7,17 +7,12 @@ import IslandProcess.Location;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Duck extends Herbivore {
+public class Mouse extends Herbivore {
     private final Map<Class<? extends Animal>, Integer> huntProbabilities = new HashMap<>();
 
-    public Duck(int x, int y) {
-        super(x, y, 1, 200, 1, 0.15);
+    public Mouse(int x, int y) {
+        super(x, y, 0.05, 500, 1, 0.01);
         huntProbabilities.put(Caterpillar.class, 90);
-    }
-
-    @Override
-    public Animal clone() {
-        return new Duck(x, y);
     }
 
     @Override
@@ -33,5 +28,10 @@ public class Duck extends Herbivore {
                 }
             }
         }
+    }
+
+    @Override
+    public Animal clone() {
+        return new Mouse(x, y);
     }
 }

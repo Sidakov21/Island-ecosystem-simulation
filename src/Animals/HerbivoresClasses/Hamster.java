@@ -2,8 +2,6 @@ package Animals.HerbivoresClasses;
 
 import Animals.Animal;
 import Animals.Herbivore;
-import IslandProcess.Island;
-import IslandProcess.Location;
 
 public class Hamster extends Herbivore {
     public Hamster(int x, int y) {
@@ -13,20 +11,5 @@ public class Hamster extends Herbivore {
     @Override
     public Animal clone() {
         return new Hamster(x, y);
-    }
-
-    @Override
-    public void move(Island island) {
-        // Реализация передвижения хомяка
-    }
-
-    @Override
-    public void eat(Location location) {
-        // Реализация питания хомяка
-    }
-
-    @Override
-    public void reproduce(Location location) {
-        // Реализация размножения хомяка
     }
 }

@@ -3,17 +3,22 @@ package Plants;
 import Interfaces.Etable;
 
 public class Plant implements Etable {
-    private double growthRate; // Скорость роста
-    private boolean wilted = false; //Увядание
+    private double weight;  // Вес растения
+    private double growthRate; //скорость роста
+    private boolean wilted = false;
 
-    public Plant (double growthRate){
+    public Plant (double weight, double growthRate){
+        this.weight = weight;
         this.growthRate = growthRate;
     }
 
-    public void grow()
-    {
-        if (!wilted){
-            // Логика роста
+    public double getWeight() {
+        return weight;
+    }
+
+    public void grow() {
+        if (!wilted) {
+            weight += growthRate;  // Растение может расти
         }
     }
 
